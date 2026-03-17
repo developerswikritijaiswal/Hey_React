@@ -111,3 +111,29 @@
     padding: 4px 10px;
     margin-left: 10px;
 }
+.loading{
+    background-color: #000;
+    opacity: 0.4;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff9a01;
+}
+.loader-box {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3; /* Light grey base border */
+  border-top: 5px solid #3498db; /* Blue animating border */
+  border-radius: 50%; /* Makes it a circle */
+  animation: spin 1s linear infinite; /* Applies the animation */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
