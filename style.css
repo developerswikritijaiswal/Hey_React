@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+input:focus{
+    outline: none;
+}
 .header-container{
     display: flex;
     justify-content: space-between;
@@ -18,6 +21,7 @@
     list-style-type: none;
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 .nav-items ul li{
     cursor: pointer;
@@ -27,9 +31,12 @@
 .nav-items ul li:hover{
     color: #007BFF;
 }
+.body-container{
+    padding: 20px 54px;
+}
 .card-main-container{
     gap: 20px;
-    padding: 20px;
+    padding: 20px 0px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -66,10 +73,10 @@
     font-size: 14px;
     color: #666;
 }   
-.btn-rate{
+/* .btn-rate{
     margin: 10px 20px 0px;
-}
-.btn-rate .btn{
+} */
+.btn-rate .btn, .login-btn, .search-btn{
     background: #ff9a01;
     color: #fff;
     padding: 4px 10px;
@@ -77,7 +84,11 @@
     border: 2px solid transparent;
     cursor: pointer;
 }
-.btn-rate .btn:hover{
+.search-btn{
+    padding: 3px 10px;
+}
+.btn-rate .btn:hover,
+.login-btn:hover{
     border: 2px solid #ff9a01;
     background: transparent;
     color: #ff9a01;
@@ -85,6 +96,14 @@
 .search-box{
     display: flex;
     align-items: center;
+    margin-right: 10px;
+    border: 1px solid #fe9a00;
+    border-radius: 6px;
+}
+.search-box input{
+    padding: 5px;
+    width: 200px;
+    border: none;
 }
 .cuisines{
     font-weight: 200;
@@ -136,4 +155,39 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.shimmer-container{
+    gap: 20px;
+    padding: 20px 55px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: left;
+}
+.shimmer-card{
+    width: 250px;
+    min-height: 300px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f0f0ff;
+}
+.d-flex{
+    display: flex;
+}
+.align-item-center{
+    align-items: center;
+}
+button:disabled{
+    cursor: default;
+    background-color: #6666662b;
+}
+.no-record{
+    text-align: center;
+    border: 1px solid #ff9a01;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    color: #ff9a01;
 }

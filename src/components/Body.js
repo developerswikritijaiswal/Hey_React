@@ -1,35 +1,26 @@
 import CardComponent from "./Card";
 // import resList from '../utils/mockData';
 import { useState, useEffect } from "react";
-import LoaderComponent from "./Loader";
+// import LoaderComponent from "./Loader";
+import Shimmer from './Shimmer';
 
 const BodyComponent = () => {
-  const [AllListOfResturant, setAllListOfResturant] = useState([]);
-  const [filteredListOfResturant, setFilteredListOfResturant] = useState([]);
-  // const [searchText, setSearchText] = useState('');
+  const [allListOfResturant, setAllListOfResturant] = useState([]);
+  const [filterValue, setFilterValue] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
   const clickTopRatedResturants = () => {
-    const filtertheRestaurant = AllListOfResturant.filter((item) => {
+    const filtertheRestaurant = filterValue.filter((item) => {
       return item?.info?.avgRating > 4.3;
     });
-    setFilteredListOfResturant(filtertheRestaurant);
+    setFilterValue(filtertheRestaurant);
   };
 
-  const clearTopRate = () => {
-    setFilteredListOfResturant(AllListOfResturant);
+  const clearFilter = () => {
+    setFilterValue(allListOfResturant);
+    setSearchText('')
   };
 
-  const input = (e) => {
-    // setSearchText(e.target.value);
-    searchBtnClick(e.target.value);
-  };
-
-  const searchBtnClick = (searchText) => {
-    const searchValue = AllListOfResturant.filter((item) => {
-      return item?.info?.name.toLowerCase().includes(searchText.toLowerCase());
-    });
-    setFilteredListOfResturant(searchValue);
-  };
 
   useEffect(() => {
     fetchData();
@@ -42,37 +33,46 @@ const BodyComponent = () => {
     const json = await response.json();
     const resData = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
     setAllListOfResturant(resData);
-    setFilteredListOfResturant(resData);
+    setFilterValue(resData);
   };
 
-  return AllListOfResturant?.length == 0 ? (
-    <LoaderComponent />
+  return allListOfResturant?.length == 0 ? (
+    <Shimmer />
   ) : (
     <div className="body-container">
-      <div className="search-box btn-rate">
-        <input type="text" onInput={input} placeholder="search..."></input>
-        {/* <button type='button' onClick={searchBtnClick}>Search</button> */}
-      </div>
-      <div className="btn-rate">
-        <button type="button" className="btn" onClick={clickTopRatedResturants}>
-          Top Rated Resturants
-        </button>
-        {filteredListOfResturant?.length !== AllListOfResturant?.length && (
-          <button type="button" onClick={clearTopRate} className="clear-btn">
-            Clear
+      <div className="d-flex align-item-center">
+        <div className="search-box">
+          <input type="text" placeholder="search..." value={searchText} onChange={(e)=> setSearchText(e.target.value)}></input>
+          <button type='button' 
+            className="search-btn"
+            disabled={searchText == ''}
+            onClick={()=>{
+            const filterValue = allListOfResturant.filter((value)=>{
+              return value.info.name.toLowerCase().includes(searchText.toLowerCase());
+            });
+            setFilterValue(filterValue)
+          }}>Search</button>
+        </div>
+        <div className="btn-rate">
+          <button type="button" className="btn" onClick={clickTopRatedResturants}>
+            Top Rated Resturants
           </button>
-        )}
+          {filterValue.length != allListOfResturant.length && 
+            <button type="button" 
+            className="clear-btn" 
+            onClick={clearFilter}>
+            Clear
+          </button>}
+        </div>
       </div>
       <div className="card-main-container">
-        {filteredListOfResturant?.length == 0 ? (
-          <h1>No restaurants match your filter!</h1>
-        ) : (
-          filteredListOfResturant.map((item) => {
+        {filterValue.length == 0 ? 
+          (<div className="no-record">No Record Found!</div>) :
+          (filterValue.map((item) => {
             const resItem = item?.info ? item?.info : item;
-            console.log(resItem);
             return <CardComponent key={resItem.id} resData={resItem} />;
-          })
-        )}
+          }))
+        }
       </div>
     </div>
   );
