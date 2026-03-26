@@ -18,9 +18,11 @@
   },
   "dependencies": {
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "react-router": "^6.30.3",
+    "react-router-dom": "^6.30.3"
   },
-  "browerslist":[
+  "browerslist": [
     "last 2 versions"
   ]
 }

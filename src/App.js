@@ -2,6 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import HeaderComponent from './components/Header';
 import BodyComponent from './components/Body';
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import About from "./components/About";
+import Error from "./components/Error";
+import Contact from "./components/Contact";
+import ResturantCardDetails from "./components/ResturantCardDetails";
 
 // -------------------------------- Nested Elements code start here ------------------ ------------
 // - Nested Elements code start here
@@ -56,11 +61,38 @@ const AppMain = () => {
   return (
     <div className="app">
       <HeaderComponent />
-      <BodyComponent />
+      <Outlet />
     </div>
   )
 }
 
+const appRoute = createBrowserRouter([
+  {
+    path:'/',
+    element: <AppMain />,
+    children:[
+      {
+      path: '/',
+      element: <BodyComponent />
+      },
+      {
+      path: '/about',
+      element: <About />
+      },
+      {
+        path: '/contact',
+        element: <Contact />
+      },
+      {
+        path: '/resturantCardDetails/:restaurantId',
+        element: <ResturantCardDetails />
+      }
+    ],
+    errorElement: <Error />,
+  },
+])
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(<HeadingComponents />);
-root.render(<AppMain/>);
+// root.render(<AppMain/>);
+root.render(<RouterProvider router={appRoute} />)

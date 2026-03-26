@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import {LOGO_CDN} from '../utils/constants';
+import {Link} from 'react-router-dom';
 
 const HeaderComponent = () => {
   // let btnName = 'Login';
   const [btnName, setBtnName] = useState('Login');
+
+
   return (
     <div className="header-container">
         <div className="logo">
@@ -11,10 +14,9 @@ const HeaderComponent = () => {
         </div>
         <div className="nav-items">
           <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-            <li>Cart</li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
             <button className='login-btn' 
               onClick={()=> {
                 btnName == 'Login' ? setBtnName('Logout') : setBtnName('Login')
