@@ -1,32 +1,53 @@
 import { useEffect, useState } from "react";
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import Shimmer from "./Shimmer";
 import {MENU_LIST_URL} from "../utils/constants"
-import { useParams, useRouteError } from "react-router-dom";
+import { useRouteError } from "react-router";
 
 const ResturantCardDetails = () => {
     const [resCardDetails, setResCardDetails] = useState(null);
     const [openIndex, setOpenIndex] = useState(false);
+    const [isLoad, setIsLoad] = useState(true);
 
     const {restaurantId} = useParams(); //destructing here const params = useParams();
 
     const err = useRouteError();
-
+    console.log(err)
     useEffect(()=> {
         fetchCardDetails();
     }, []);
 
     const fetchCardDetails = async () => {
-        const data = await fetch("https://namastedev.com/api/v1/listRestaurantMenu/"+restaurantId)
-        const json = await data?.json();
-        setResCardDetails(json?.data);
+        setIsLoad(true);
+        try{
+            const data = await fetch("https://namastedev.com/api/v1/listRestaurantMenu/"+123456); //restaurantId
+            const json = await data?.json();
+            if(data.status == 200){
+                setResCardDetails(json?.data);
+            }else{
+                console.log(json);
+                setResCardDetails(json)
+                setIsLoad(false);
+            }
+        }
+        catch(error){
+            
+        }
+        finally{
+            setIsLoad(false);
+        }
     }
     console.log(resCardDetails)
     
-    if(resCardDetails === null) return <Shimmer />;
+    if(isLoad) return <Shimmer />;
 
-    const info = resCardDetails?.cards[2]?.card?.card?.info;
-    const menu = resCardDetails?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+    if(resCardDetails?.error) return (
+        <div className="menu-not-found text-center res-card-details">
+            {resCardDetails?.error}
+        </div>)
+
+    const info = resCardDetails?.cards?.[2]?.card?.card?.info;
+    const menu = resCardDetails?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
 
     return (
       <div className="res-card-details">
