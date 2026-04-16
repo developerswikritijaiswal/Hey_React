@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 // import LoaderComponent from "./Loader";
 import Shimmer from './Shimmer';
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const BodyComponent = () => {
   const [allListOfResturant, setAllListOfResturant] = useState([]);
@@ -11,6 +12,8 @@ const BodyComponent = () => {
   const [searchText, setSearchText] = useState('');
   const [allJson, setAllJson] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const onlineStatus = useOnlineStatus();
 
   const clickTopRatedResturants = () => {
     const filtertheRestaurant = filterValue.filter((item) => {
@@ -111,6 +114,8 @@ const BodyComponent = () => {
     const response = await fetch(myRequest);
     console.log(response);
   }
+
+  if(!onlineStatus) return <h1>You are Offline!! check your Internet connection</h1>
 
   return allListOfResturant?.length == 0 ? (
     <div className="shimmer-container"><Shimmer count={10}/></div>

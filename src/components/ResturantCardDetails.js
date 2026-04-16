@@ -3,43 +3,45 @@ import {Link, useParams} from 'react-router-dom';
 import Shimmer from "./Shimmer";
 import {MENU_LIST_URL} from "../utils/constants"
 import { useRouteError } from "react-router";
+import useResturantCardDetails from "../utils/useResturantCardDetails";
 
 const ResturantCardDetails = () => {
-    const [resCardDetails, setResCardDetails] = useState(null);
+    // const [resCardDetails, setResCardDetails] = useState(null);
     const [openIndex, setOpenIndex] = useState(false);
-    const [isLoad, setIsLoad] = useState(true);
 
     const {restaurantId} = useParams(); //destructing here const params = useParams();
 
     const err = useRouteError();
-    console.log(err)
-    useEffect(()=> {
-        fetchCardDetails();
-    }, []);
 
-    const fetchCardDetails = async () => {
-        setIsLoad(true);
-        try{
-            const data = await fetch("https://namastedev.com/api/v1/listRestaurantMenu/"+123456); //restaurantId
-            const json = await data?.json();
-            if(data.status == 200){
-                setResCardDetails(json?.data);
-            }else{
-                console.log(json);
-                setResCardDetails(json)
-                setIsLoad(false);
-            }
-        }
-        catch(error){
+    // useEffect(()=> {
+    //     fetchCardDetails();
+    // }, []);
+
+    // const fetchCardDetails = async () => {
+    //     setIsLoad(true);
+    //     try{
+    //         const data = await fetch("https://namastedev.com/api/v1/listRestaurantMenu/"+123456); //restaurantId
+    //         const json = await data?.json();
+    //         if(data.status == 200){
+    //             setResCardDetails(json?.data);
+    //         }else{
+    //             console.log(json);
+    //             setResCardDetails(json)
+    //             setIsLoad(false);
+    //         }
+    //     }
+    //     catch(error){
             
-        }
-        finally{
-            setIsLoad(false);
-        }
-    }
-    console.log(resCardDetails)
+    //     }
+    //     finally{
+    //         setIsLoad(false);
+    //     }
+    // }
+    // console.log(resCardDetails)
+
+    const resCardDetails = useResturantCardDetails(restaurantId);
     
-    if(isLoad) return <Shimmer />;
+    if(resCardDetails === null) return <Shimmer />;
 
     if(resCardDetails?.error) return (
         <div className="menu-not-found text-center res-card-details">
