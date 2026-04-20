@@ -20,3 +20,11 @@
 - Beautiful Diagonstic
 - HTTPs
 - Tree Shaking - remove unsed code
+
+
+# Optimised the bundle
+- code Splitting
+- Lazy loading
+- on demand loading
+- dynamic import/Bundling
+- Chunking

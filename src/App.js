@@ -1,12 +1,21 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import HeaderComponent from './components/Header';
 import BodyComponent from './components/Body';
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import About from "./components/About";
 import Error from "./components/Error";
-import Contact from "./components/Contact";
-import ResturantCardDetails from "./components/ResturantCardDetails";
+// import Contact from "./components/Contact";
+// import ResturantCardDetails from "./components/ResturantCardDetails";
+
+// code Splitting
+// Lazy loading
+// on demand loading
+// dynamic import/Bundling
+// Chunking
+
+const ResturantCardDetails = lazy(() => import('./components/ResturantCardDetails'));
+const Contact = lazy(() => import('./components/Contact'));
 
 // -------------------------------- Nested Elements code start here ------------------ ------------
 // - Nested Elements code start here
@@ -81,11 +90,19 @@ const appRoute = createBrowserRouter([
       },
       {
         path: '/contact',
-        element: <Contact />
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Contact />
+          </Suspense>
+        )
       },
       {
         path: '/resturantCardDetails/:restaurantId',
-        element: <ResturantCardDetails />
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <ResturantCardDetails />
+          </Suspense>
+        )
       }
     ],
     errorElement: <Error />,
