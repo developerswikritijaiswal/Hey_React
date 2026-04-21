@@ -118,11 +118,11 @@ const BodyComponent = () => {
   if(!onlineStatus) return <h1>You are Offline!! check your Internet connection</h1>
 
   return allListOfResturant?.length == 0 ? (
-    <div className="shimmer-container"><Shimmer count={10}/></div>
+    <div className="shimmer-container pt-20 flex flex-wrap gap-5 justify-start py-5 px-[54px]"><Shimmer count={10}/></div>
   ) : (
-    <div className="body-container">
-      <div className="d-flex align-item-center">
-        <div className="search-box">
+    <div className="body-container pt-20 py-5 px-[54px]">
+      <div className="flex items-center">
+        {/* <div className="search-box">
           <input type="text" placeholder="search..." value={searchText} onChange={(e)=> setSearchText(e.target.value)}></input>
           <button type='button' 
             className="search-btn"
@@ -133,20 +133,40 @@ const BodyComponent = () => {
             });
             setFilterValue(filterValue)
           }}>Search</button>
+        </div> */}
+
+        <div className="search-box flex items-center gap-2">
+          <input type="text"
+            placeholder="Search restaurants..."
+            value={searchText} onChange={(e)=> setSearchText(e.target.value)}
+            className="border border-gray-300 px-3 py-1 rounded w-64 focus:outline-none focus:ring-2 focus:ring-orange-500"/>
+          <button className="search-btn bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600 transition mr-2"
+            disabled={searchText == ''}
+            onClick={()=>{
+            const filterValue = allListOfResturant.filter((value)=>{
+              return value.info.name.toLowerCase().includes(searchText.toLowerCase());
+            });
+            setFilterValue(filterValue)
+            }}>
+            Search
+          </button>
         </div>
+
         <div className="btn-rate">
-          <button type="button" className="btn" onClick={clickTopRatedResturants}>
+          <button type="button" 
+            className="btn text-sm px-3 py-1 bg-orange-500 text-white border-2 border-transparent rounded hover:bg-white hover:border-orange-500 transition hover:text-orange-500" 
+            onClick={clickTopRatedResturants}>
             Top Rated Resturants
           </button>
           {filterValue.length != allListOfResturant.length && 
             <button type="button" 
-            className="clear-btn" 
+            className="clear-btn text-sm px-3 py-1 bg-gray-500 text-white border-2 border-transparent rounded hover:bg-white hover:border-gray-500 transition hover:text-gray-500 ml-2" 
             onClick={clearFilter}>
             Clear
           </button>}
         </div>
       </div>
-      <div className="card-main-container">
+      <div className="card-main-container flex flex-wrap gap-5 justify-start py-5">
         {filterValue.length == 0 ? 
           (<div className="no-record">No Record Found!</div>) :
           (filterValue.map((item, i) => {

@@ -1,4 +1,8 @@
-*{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -83,9 +87,6 @@ a{
     font-size: 14px;
     color: #666;
 }   
-/* .btn-rate{
-    margin: 10px 20px 0px;
-} */
 .btn-rate .btn, .login-btn, .search-btn{
     background: #ff9a01;
     color: #fff;
@@ -192,7 +193,6 @@ button:disabled{
 }
 .res-card-details{
     max-width: 800px;
-    /* min-height: 800px; */
     margin: 20px auto 0;
 }
 ul.cuisines li{
@@ -276,4 +276,4 @@ img{
 }
 .font-14{
     font-size: 14px;
-}
+} */

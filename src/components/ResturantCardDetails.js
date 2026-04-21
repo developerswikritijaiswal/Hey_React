@@ -44,7 +44,7 @@ const ResturantCardDetails = () => {
     if(resCardDetails === null) return <Shimmer />;
 
     if(resCardDetails?.error) return (
-        <div className="menu-not-found text-center res-card-details">
+        <div className="menu-not-found mt-20 text-center res-card-details border-2 border-gray-300 rounded-lg p-5 mx-auto max-w-3xl shadow-sm">
             {resCardDetails?.error}
         </div>)
 
@@ -52,17 +52,17 @@ const ResturantCardDetails = () => {
     const menu = resCardDetails?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
 
     return (
-      <div className="res-card-details">
-        <div className="res-card-info">
+      <div className="res-card-details pt-20 mx-auto max-w-3xl">
+        <div className="res-card-info rounded-2xl border-2 border-gray-300 p-5 mb-5">
           <h1>{info?.name}</h1>
-          <p>
+          <p className="my-2">
             {info?.avgRating} ({info?.totalRatingsString}) |{" "}
             {info?.costForTwoMessage}
           </p>
           <ul className="cuisines">
             {info?.cuisines?.map((item, index) => {
               return (
-                <li key={index}>
+                <li key={index} className="pr-2 inline-block">
                   <Link to="/abc">{item}</Link>
                 </li>
               );
@@ -78,8 +78,8 @@ const ResturantCardDetails = () => {
                             if(Object.keys(item).length === 0) return;
                             const menuList = item?.card?.card
                             return (
-                                <li key={index} className="menu-list">
-                                    <h3 className="menu-list-heading" 
+                                <li key={index} className="menu-list border-2 border-gray-300 rounded-lg mb-3 shadow-sm">
+                                    <h3 className="menu-list-heading p-2 font-semibold cursor-pointer" 
                                         onClick={()=>{
                                         return openIndex == index ? setOpenIndex(null) : setOpenIndex(index);
                                     }}>{menuList?.title} ({menuList?.itemCards?.length})</h3>
@@ -87,14 +87,14 @@ const ResturantCardDetails = () => {
                                     {openIndex === index && (
                                         menuList?.itemCards?.map((itemCards)=>{
                                             return (
-                                                <div key={itemCards?.card?.info?.id} className="item-card">
+                                                <div key={itemCards?.card?.info?.id} className="item-card border-b-2 border-gray-200 m-5 flex justify-between items-start pb-5 last:border-b-0 last:mb-0">
                                                     <div>
-                                                        <h5>{itemCards?.card?.info?.name}</h5>
-                                                        <p>₹ {itemCards?.card?.info?.price/100}</p>
-                                                        <p>{itemCards?.card?.info?.description}</p>
+                                                        <h5 className="mb-2">{itemCards?.card?.info?.name}</h5>
+                                                        <p className="mb-2">₹ {itemCards?.card?.info?.price/100}</p>
+                                                        <p className="mb-2">{itemCards?.card?.info?.description}</p>
                                                     </div>
-                                                    <div className="menu-img">
-                                                        <img src={MENU_LIST_URL + itemCards?.card?.info?.imageId}></img>
+                                                    <div className="menu-img w-36 h-32">
+                                                        <img src={MENU_LIST_URL + itemCards?.card?.info?.imageId} className="w-full h-full"></img>
                                                     </div>
                                                 </div>
                                                 

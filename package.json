@@ -14,7 +14,9 @@
   "author": "Swikriti Jaiswal",
   "license": "ISC",
   "devDependencies": {
-    "parcel": "^2.16.4"
+    "parcel": "^2.16.4",
+    "postcss": "^8.5.10",
+    "tailwindcss": "^3.4.19"
   },
   "dependencies": {
     "react": "^19.2.4",

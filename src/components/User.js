@@ -25,7 +25,7 @@ const User = (props) => {
         setData(json);
     }
 
-    return <div className="user-card">
+    return <div className="user-card border-2 border-gray-300 rounded-lg p-5 inline-block m-2 shadow-sm">
             {/* <h2>Count: {count}</h2>
             <h2>Count2: {count2}</h2>
             <button onClick={(()=>{
