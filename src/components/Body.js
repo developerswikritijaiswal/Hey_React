@@ -1,7 +1,5 @@
-import CardComponent from "./Card";
-// import resList from '../utils/mockData';
+import CardComponent, {withDeliveryLabel} from "./Card";
 import { useState, useEffect } from "react";
-// import LoaderComponent from "./Loader";
 import Shimmer from './Shimmer';
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -14,6 +12,8 @@ const BodyComponent = () => {
   const [loading, setLoading] = useState(true);
 
   const onlineStatus = useOnlineStatus();
+
+  const FastDeliveryCard = withDeliveryLabel(CardComponent);
 
   const clickTopRatedResturants = () => {
     const filtertheRestaurant = filterValue.filter((item) => {
@@ -35,6 +35,7 @@ const BodyComponent = () => {
   const fetchData = async () => {
     try{
       const response = await fetch(
+        // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.57553299557862&lng=77.38999027758837&collection=83649&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.57553299557862&lng=77.38999027758837&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
       // "https://www.swiggy.com/dapi/restaurants/list/v5?lat=27.146757289936993&lng=83.55684142559767&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
@@ -122,19 +123,6 @@ const BodyComponent = () => {
   ) : (
     <div className="body-container pt-20 py-5 px-[54px]">
       <div className="flex items-center">
-        {/* <div className="search-box">
-          <input type="text" placeholder="search..." value={searchText} onChange={(e)=> setSearchText(e.target.value)}></input>
-          <button type='button' 
-            className="search-btn"
-            disabled={searchText == ''}
-            onClick={()=>{
-            const filterValue = allListOfResturant.filter((value)=>{
-              return value.info.name.toLowerCase().includes(searchText.toLowerCase());
-            });
-            setFilterValue(filterValue)
-          }}>Search</button>
-        </div> */}
-
         <div className="search-box flex items-center gap-2">
           <input type="text"
             placeholder="Search restaurants..."
@@ -143,7 +131,7 @@ const BodyComponent = () => {
           <button className="search-btn bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600 transition mr-2"
             disabled={searchText == ''}
             onClick={()=>{
-            const filterValue = allListOfResturant.filter((value)=>{
+            const filterValue = allListOfResturant?.filter((value)=>{
               return value.info.name.toLowerCase().includes(searchText.toLowerCase());
             });
             setFilterValue(filterValue)
@@ -158,7 +146,7 @@ const BodyComponent = () => {
             onClick={clickTopRatedResturants}>
             Top Rated Resturants
           </button>
-          {filterValue.length != allListOfResturant.length && 
+          {filterValue?.length != allListOfResturant?.length && 
             <button type="button" 
             className="clear-btn text-sm px-3 py-1 bg-gray-500 text-white border-2 border-transparent rounded hover:bg-white hover:border-gray-500 transition hover:text-gray-500 ml-2" 
             onClick={clearFilter}>
@@ -167,13 +155,15 @@ const BodyComponent = () => {
         </div>
       </div>
       <div className="card-main-container flex flex-wrap gap-5 justify-start py-5">
-        {filterValue.length == 0 ? 
+        {filterValue?.length == 0 ? 
           (<div className="no-record">No Record Found!</div>) :
-          (filterValue.map((item, i) => {
+          (filterValue?.map((item, i) => {
             const resItem = item?.info ? item?.info : item;
               return (
                 <Link to={"/resturantCardDetails/" + resItem.id} key={resItem.id+i}>
-                  <CardComponent resData={resItem} />
+                  {resItem.sla.deliveryTime <= 30 ? 
+                  <FastDeliveryCard resData={resItem} /> :
+                  <CardComponent resData={resItem} />}
                 </Link>
               );
             })
@@ -181,7 +171,7 @@ const BodyComponent = () => {
         }
         {loading && <Shimmer count={6}/>}
       </div>
-      {filterValue.length > 0 && 
+      {filterValue?.length > 0 && 
         <div className="show-more text-center">
           <button type="button" onClick={loadMore}>Show More..</button>
         </div>}
