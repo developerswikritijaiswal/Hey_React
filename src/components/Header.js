@@ -19,6 +19,7 @@ const HeaderComponent = () => {
             <li>Online Status: <span className='font-14 text-sm'>{onlineStatus ? "🟢" : "🔴"}</span></li>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about">About</Link></li>
+            <li><Link to="/help">Help</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <button className='login-btn text-sm px-3 py-1 bg-orange-500 text-white border-2 border-transparent rounded hover:bg-white hover:border-orange-500 transition hover:text-orange-500' 
               onClick={()=> {

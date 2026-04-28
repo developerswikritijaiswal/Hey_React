@@ -13,7 +13,7 @@ const BodyComponent = () => {
 
   const onlineStatus = useOnlineStatus();
 
-  const FastDeliveryCard = withDeliveryLabel(CardComponent);
+  const FastDeliveryCard = withDeliveryLabel(CardComponent); //HOC
 
   const clickTopRatedResturants = () => {
     const filtertheRestaurant = filterValue.filter((item) => {

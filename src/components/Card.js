@@ -16,6 +16,9 @@ const CardComponent = (props) => {
 }
 
 // HOC (Higher Order Component) - A component which takes another component as an argument and returns a new component is called HOC. 
+// use this one when you want to add some common UI (like label) to multiple components. 
+// or you can use WithDeliveryLabel componet directly in body component when you want to add label. 
+// (example shown in CardDetailsInner component && resturantCardDetails component)
 export const withDeliveryLabel = (CardComponent) => {
   return (props) => {
     return (
