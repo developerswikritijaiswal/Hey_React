@@ -1,8 +1,9 @@
 import CardComponent, {withDeliveryLabel} from "./Card";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from './Shimmer';
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const BodyComponent = () => {
   const [allListOfResturant, setAllListOfResturant] = useState([]);
@@ -14,6 +15,8 @@ const BodyComponent = () => {
   const onlineStatus = useOnlineStatus();
 
   const FastDeliveryCard = withDeliveryLabel(CardComponent); //HOC
+
+  const {loggedInUser, setLoggedInName} = useContext(UserContext);
 
   const clickTopRatedResturants = () => {
     const filtertheRestaurant = filterValue.filter((item) => {
@@ -140,7 +143,7 @@ const BodyComponent = () => {
           </button>
         </div>
 
-        <div className="btn-rate">
+        <div className="btn-rate pr-3">
           <button type="button" 
             className="btn text-sm px-3 py-1 bg-orange-500 text-white border-2 border-transparent rounded hover:bg-white hover:border-orange-500 transition hover:text-orange-500" 
             onClick={clickTopRatedResturants}>
@@ -153,6 +156,10 @@ const BodyComponent = () => {
             Clear
           </button>}
         </div>
+        <input value={loggedInUser}
+        type="text" onChange={(e) => setLoggedInName(e.target.value)}
+        placeholder="user" 
+        className="border border-gray-300 px-3 py-1 rounded w-64 focus:outline-none focus:ring-2 focus:ring-orange-500" />
       </div>
       <div className="card-main-container flex flex-wrap gap-5 justify-start py-5">
         {filterValue?.length == 0 ? 

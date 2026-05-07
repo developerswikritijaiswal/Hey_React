@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState, useContext} from "react";
 import ReactDOM from "react-dom/client";
 import HeaderComponent from './components/Header';
 import BodyComponent from './components/Body';
@@ -6,6 +6,8 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import About from "./components/About";
 import Error from "./components/Error";
 import Help from "./components/Help";
+import UserContext from "./utils/UserContext";
+
 // import Contact from "./components/Contact";
 // import ResturantCardDetails from "./components/ResturantCardDetails";
 
@@ -68,10 +70,16 @@ const HeadingComponents = () => {
 };
 
 const AppMain = () => {
+  const {loggedInUser} = useContext(UserContext);
+  const [loggedInName, setLoggedInName] = useState(loggedInUser);
   return (
     <div className="app">
-      <HeaderComponent />
-      <Outlet />
+      <UserContext.Provider value={{'loggedInUser': loggedInName,setLoggedInName}}>
+        {/* <UserContext.Provider value={{'loggedInUser':'Swikriti'}}> */}
+          <HeaderComponent />
+        {/* </UserContext.Provider> */}
+        <Outlet />
+      </UserContext.Provider>
     </div>
   )
 }

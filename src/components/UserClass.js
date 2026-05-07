@@ -1,5 +1,6 @@
 import React from "react";
 import UserChild from "./UserChild";
+import UserContext from "../utils/UserContext";
 
 class UserClass extends React.Component {
     constructor(props){
@@ -63,6 +64,9 @@ class UserClass extends React.Component {
                     bio: 'Hello!!',
                 })
             })}>btn 1</button>
+            <UserContext.Consumer>
+                {({loggedInUser}) => <p>LoggedIn user : {loggedInUser}</p>}
+            </UserContext.Consumer>
             <button onClick={()=>{console.log('button2')}}>btn 2</button>
             <h3>Name : {name}</h3>
             <h3>Role: {role}</h3>

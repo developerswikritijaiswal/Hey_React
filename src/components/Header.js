@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {LOGO_CDN} from '../utils/constants';
 import {Link} from 'react-router-dom';
 import useOnlineStatus from '../utils/useOnlineStatus';
+import UserContext from '../utils/UserContext';
 
 const HeaderComponent = () => {
   // let btnName = 'Login';
   const [btnName, setBtnName] = useState('Login');
   const onlineStatus = useOnlineStatus();
+
+  const {loggedInUser} = useContext(UserContext);
 
 
   return (
@@ -21,6 +24,7 @@ const HeaderComponent = () => {
             <li><Link to="/about">About</Link></li>
             <li><Link to="/help">Help</Link></li>
             <li><Link to="/contact">Contact</Link></li>
+            <li>{loggedInUser}</li>
             <button className='login-btn text-sm px-3 py-1 bg-orange-500 text-white border-2 border-transparent rounded hover:bg-white hover:border-orange-500 transition hover:text-orange-500' 
               onClick={()=> {
                 btnName == 'Login' ? setBtnName('Logout') : setBtnName('Login')
