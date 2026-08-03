@@ -28,3 +28,13 @@
 - on demand loading
 - dynamic import/Bundling
 - Chunking
+
+
+# install Redux
+- Install @reduxjs/toolkit & react-redux
+- install react-redux
+- Build our store
+- connect our store to out app
+- create a slice (cart slice)
+- dispatch (Action)
+- selector
